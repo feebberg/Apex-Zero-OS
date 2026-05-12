@@ -11,7 +11,8 @@ function initDock() {
     { id: "terminal", icon: "💻", title: "Terminal" },
     { id: "filemanager", icon: "📁", title: "File Manager" },
     { id: "musicplayer", icon: "🎵", title: "Music Player" },
-    { id: "settings", icon: "⚙️", title: "Settings" }
+    { id: "settings", icon: "⚙️", title: "Settings" },
+    { id: "assistant", icon: "🤖", title: "AI Assistant" }
   ];
 
   apps.forEach(app => {
@@ -30,4 +31,5 @@ function openAppById(id) {
   if (id === "filemanager") return openFileManager();
   if (id === "musicplayer") return openMusicPlayer();
   if (id === "settings") return openSettings();
+  if (id === "assistant") return openAssistant();
 }
