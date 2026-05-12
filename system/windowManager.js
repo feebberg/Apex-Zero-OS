@@ -1,119 +1,159 @@
-// --- GAME HUB (6 MOST RECENT GAMES) ---
+/* ============================================================
+   APEX ZERO OS 2.0 — WINDOW MANAGER
+   Fully synced with style.css + main.js
+   ============================================================ */
 
-const azGames = [
-  {
-    id: "eagler1122",
-    name: "Eaglercraft 1.12.2",
-    desc: "Your original offline WASM build.",
-    icon: "⛏️",
-    url: "https://github.com/feebberg/Apex-Zero/blob/main/Eaglercraft_1.12.2_WASM_Offline_Download%20(2).html"
-  },
-  {
-    id: "game2",
-    name: "Game Slot 2",
-    desc: "Add your next game here.",
-    icon: "🎮",
-    url: ""
-  },
-  {
-    id: "game3",
-    name: "Game Slot 3",
-    desc: "Add your next game here.",
-    icon: "🕹️",
-    url: ""
-  },
-  {
-    id: "game4",
-    name: "Game Slot 4",
-    desc: "Add your next game here.",
-    icon: "⚡",
-    url: ""
-  },
-  {
-    id: "game5",
-    name: "Game Slot 5",
-    desc: "Add your next game here.",
-    icon: "🔥",
-    url: ""
-  },
-  {
-    id: "game6",
-    name: "Game Slot 6",
-    desc: "Add your next game here.",
-    icon: "🚀",
-    url: ""
-  }
-];
+let zIndexCounter = 1000;
 
-function openGameHub() {
-  const content = `
-    <h2 style="margin-top:0;">Game Hub</h2>
-    <p>Select a game to launch in a window.</p>
+/* ------------------------------------------------------------
+   CREATE WINDOW
+   ------------------------------------------------------------ */
+function createWindow(id, title, content, opts = {}) {
+  const win = document.createElement("div");
+  win.className = "azWindow";
+  win.dataset.id = id;
 
-    <div style="
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-      gap:12px;
-    ">
-      ${azGames.map(g => `
-        <div class="gameCard" data-id="${g.id}"
-          style="
-            padding:10px;
-            border-radius:10px;
-            border:1px solid var(--border-soft);
-            background:rgba(255,255,255,0.05);
-            cursor:pointer;
-            transition:0.2s;
-          "
-        >
-          <div style="font-size:24px; margin-bottom:6px;">${g.icon}</div>
-          <div style="font-weight:bold; margin-bottom:4px;">${g.name}</div>
-          <div style="opacity:0.7; font-size:13px;">${g.desc}</div>
-        </div>
-      `).join("")}
-    </div>
-  `;
+  // Default size + position
+  win.style.width = opts.width || "450px";
+  win.style.height = opts.height || "300px";
+  win.style.left = opts.left || "200px";
+  win.style.top = opts.top || "150px";
+  win.style.zIndex = zIndexCounter++;
 
-  const win = createWindow("gamehub", "Game Hub", content, {
-    width: "640px",
-    height: "480px",
-    left: "260px",
-    top: "120px"
+  // Save original bounds for restore
+  win._normalBounds = {
+    width: win.style.width,
+    height: win.style.height,
+    left: win.style.left,
+    top: win.style.top
+  };
+  win._isMaximized = false;
+
+  /* ------------------------------------------------------------
+     TITLE BAR
+     ------------------------------------------------------------ */
+  const titlebar = document.createElement("div");
+  titlebar.className = "azTitleBar";
+
+  const titleText = document.createElement("div");
+  titleText.className = "azTitle";
+  titleText.textContent = title;
+
+  const controls = document.createElement("div");
+  controls.className = "azControls";
+
+  const minBtn = document.createElement("div");
+  minBtn.className = "azMin";
+
+  const maxBtn = document.createElement("div");
+  maxBtn.className = "azMax";
+
+  const closeBtn = document.createElement("div");
+  closeBtn.className = "azClose";
+
+  controls.appendChild(minBtn);
+  controls.appendChild(maxBtn);
+  controls.appendChild(closeBtn);
+
+  titlebar.appendChild(titleText);
+  titlebar.appendChild(controls);
+
+  /* ------------------------------------------------------------
+     CONTENT AREA
+     ------------------------------------------------------------ */
+  const contentDiv = document.createElement("div");
+  contentDiv.className = "azContent";
+  contentDiv.innerHTML = content;
+
+  win.appendChild(titlebar);
+  win.appendChild(contentDiv);
+  document.body.appendChild(win);
+
+  /* ------------------------------------------------------------
+     BUTTON ACTIONS
+     ------------------------------------------------------------ */
+  closeBtn.onclick = () => win.remove();
+
+  minBtn.onclick = () => {
+    win.style.display = "none";
+    pushNotification(`${title} minimized`);
+  };
+
+  maxBtn.onclick = () => toggleMaximize(win);
+
+  /* ------------------------------------------------------------
+     DRAGGING
+     ------------------------------------------------------------ */
+  let dragging = false;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  titlebar.addEventListener("mousedown", e => {
+    if (e.target === closeBtn || e.target === maxBtn || e.target === minBtn) return;
+
+    dragging = true;
+    offsetX = e.clientX - win.offsetLeft;
+    offsetY = e.clientY - win.offsetTop;
+
+    win.style.zIndex = zIndexCounter++;
+
+    // If dragging a maximized window, restore first
+    if (win._isMaximized) {
+      toggleMaximize(win, { fromDrag: true, mouseX: e.clientX });
+      offsetX = e.clientX - win.offsetLeft;
+    }
   });
 
-  win.querySelectorAll(".gameCard").forEach(card => {
-    card.onclick = () => {
-      const id = card.dataset.id;
-      const game = azGames.find(g => g.id === id);
-      if (!game || !game.url) return;
-      openGameWindow(game);
-    };
+  document.addEventListener("mousemove", e => {
+    if (!dragging) return;
+    win.style.left = e.clientX - offsetX + "px";
+    win.style.top = e.clientY - offsetY + "px";
   });
+
+  document.addEventListener("mouseup", () => {
+    dragging = false;
+  });
+
+  return win;
 }
 
-function openGameWindow(game) {
-  const content = `
-    <h3 style="margin-top:0;">${game.icon} ${game.name}</h3>
-    <div style="margin-bottom:8px; opacity:0.8;">${game.desc}</div>
-    <div style="
-      width:100%;
-      height:calc(100% - 60px);
-      border-radius:8px;
-      overflow:hidden;
-      border:1px solid var(--border-soft);
-      background:rgba(0,0,0,0.6);
-    ">
-      <iframe
-        src="${game.url}"
-        style="width:100%; height:100%; border:none;"
-      ></iframe>
-    </div>
-  `;
+/* ------------------------------------------------------------
+   MAXIMIZE / RESTORE
+   ------------------------------------------------------------ */
+function toggleMaximize(win, options = {}) {
+  if (!win._isMaximized) maximizeWindow(win);
+  else restoreWindow(win, options);
+}
 
-  createWindow(game.id, game.name, content, {
-    width: "800px",
-    height: "520px",
-    left: "280px",
-    top: "140px"
-  });
+function maximizeWindow(win) {
+  win._normalBounds = {
+    width: win.style.width,
+    height: win.style.height,
+    left: win.style.left,
+    top: win.style.top
+  };
+
+  win.style.left = "0px";
+  win.style.top = "0px";
+  win.style.width = window.innerWidth + "px";
+  win.style.height = window.innerHeight + "px";
+
+  win._isMaximized = true;
+}
+
+function restoreWindow(win, options = {}) {
+  const b = win._normalBounds;
+
+  win.style.width = b.width;
+  win.style.height = b.height;
+  win.style.left = b.left;
+  win.style.top = b.top;
+
+  win._isMaximized = false;
+
+  // If restoring from drag, center under cursor
+  if (options.fromDrag) {
+    const rect = win.getBoundingClientRect();
+    win.style.left = options.mouseX - rect.width / 2 + "px";
+  }
 }
