@@ -9,8 +9,7 @@ function saveSetting(key, value) {
   localStorage.setItem("AZ_SETTINGS", JSON.stringify(AZ_SETTINGS));
 }
 
-// Get a setting
+// Get a setting with optional fallback
 function getSetting(key, fallback = null) {
   return AZ_SETTINGS[key] ?? fallback;
 }
-
