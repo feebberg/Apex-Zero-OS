@@ -86,7 +86,6 @@ function openGameHub() {
       const id = card.dataset.id;
       const game = azGames.find(g => g.id === id);
       if (!game || !game.url) return;
-
       openGameWindow(game);
     };
   });
