@@ -1,121 +1,170 @@
+/* ------------------------------
+   ROOT VARIABLES
+------------------------------ */
 :root {
   --bg-main: radial-gradient(circle at top, #3b0b5f 0, #05010a 45%, #000000 100%);
   --accent-neon: #ff2bff;
-  --accent-cyan: #00f6ff;
-  --border-soft: rgba(255, 255, 255, 0.18);
-  --text-main: #f5e9ff;
+  --border-soft: rgba(255,255,255,0.15);
 }
 
-* {
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
+/* ------------------------------
+   GLOBAL
+------------------------------ */
 body {
   margin: 0;
+  padding: 0;
   background: var(--bg-main);
-  color: var(--text-main);
+  color: white;
+  font-family: system-ui, sans-serif;
   overflow: hidden;
+  transition: 0.25s ease;
 }
 
 #desktop {
   position: fixed;
   inset: 0;
-  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
 }
 
+/* ------------------------------
+   DOCK
+------------------------------ */
 #dock {
   position: fixed;
-  bottom: 16px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 12px;
-  padding: 8px 14px;
-  background: rgba(0, 0, 0, 0.65);
-  border-radius: 999px;
+  gap: 14px;
+  padding: 12px 20px;
+  background: rgba(0,0,0,0.45);
   border: 1px solid var(--border-soft);
-  box-shadow: 0 0 18px #ff2bff55;
-  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px #ff2bff55;
   z-index: 9999;
 }
 
 .dockIcon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 26px;
   cursor: pointer;
-  color: white;
-  font-size: 20px;
-  box-shadow: 0 0 8px #ff2bff33;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  padding: 8px;
+  border-radius: 12px;
+  transition: 0.2s;
 }
 
 .dockIcon:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 0 12px #ff2bffaa;
+  background: rgba(255,255,255,0.1);
+  transform: scale(1.15);
 }
 
+/* ------------------------------
+   WINDOWS
+------------------------------ */
 .azWindow {
   position: absolute;
-  background: rgba(5, 0, 20, 0.92);
-  border-radius: 12px;
+  background: rgba(0,0,0,0.55);
   border: 1px solid var(--border-soft);
-  box-shadow: 0 0 10px #ff2bff55;
-  color: white;
-  display: flex;
-  flex-direction: column;
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px #ff2bff55;
   overflow: hidden;
+  z-index: 1000;
 }
 
 .azTitleBar {
-  padding: 6px 10px;
+  padding: 8px;
+  background: rgba(255,255,255,0.08);
+  border-bottom: 1px solid var(--border-soft);
+  cursor: grab;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  background: linear-gradient(90deg, rgba(255, 43, 255, 0.25), rgba(0, 246, 255, 0.15));
-  cursor: move;
-  user-select: none;
-  font-size: 13px;
+  align-items: center;
 }
 
-.azCloseBtn {
+.azTitle {
+  font-weight: bold;
+}
+
+.azClose {
   width: 16px;
   height: 16px;
-  border-radius: 50%;
   background: #ff4b6b;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
   cursor: pointer;
 }
 
 .azContent {
-  flex: 1;
-  background: radial-gradient(circle at top, rgba(255, 43, 255, 0.12), rgba(0, 0, 0, 0.9));
-  padding: 10px;
-  overflow: auto;
+  padding: 12px;
+  height: calc(100% - 40px);
+  overflow-y: auto;
 }
 
+/* ------------------------------
+   TOAST NOTIFICATIONS
+------------------------------ */
 #toastContainer {
   position: fixed;
-  top: 16px;
-  right: 16px;
+  top: 20px;
+  right: 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  z-index: 99999;
+  gap: 10px;
+  z-index: 999999;
 }
 
 .toast {
   padding: 10px 14px;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
+  background: rgba(0,0,0,0.7);
   border: 1px solid var(--border-soft);
-  color: white;
-  font-size: 13px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
   box-shadow: 0 0 12px #ff2bff55;
+  animation: fadeIn 0.3s ease;
 }
 
+/* ------------------------------
+   SPOTLIGHT SEARCH
+------------------------------ */
+#azSpotlight {
+  animation: fadeIn 0.25s ease;
+}
+
+.spotItem:hover {
+  background: rgba(255,255,255,0.15) !important;
+}
+
+/* ------------------------------
+   WIDGETS
+------------------------------ */
+.azWidget {
+  animation: fadeIn 0.25s ease;
+}
+
+/* ------------------------------
+   LOCK SCREEN
+------------------------------ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.96); }
+}
+
+/* ------------------------------
+   NOTIFICATION CENTER
+------------------------------ */
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
