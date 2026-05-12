@@ -42,9 +42,12 @@ function openSpotlight() {
   });
 }
 
-// FIXED HOTKEY — Ctrl + Space
+// load hotkey from settings (default: Ctrl+Space)
+let spotlightHotkey = getSetting("spotlightHotkey", "Ctrl+Space");
+
+// global hotkey
 document.addEventListener("keydown", e => {
-  if (e.ctrlKey && e.code === "Space") {
+  if (spotlightHotkey === "Ctrl+Space" && e.ctrlKey && e.code === "Space") {
     openSpotlight();
     e.preventDefault();
   }
