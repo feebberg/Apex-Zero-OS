@@ -66,41 +66,65 @@ body {
 .azWindow {
   position: absolute;
   background: rgba(0,0,0,0.55);
-  border: 1px solid var(--border-soft);
+  border: 1px solid #ffffff22;
   border-radius: 10px;
   backdrop-filter: blur(12px);
-  box-shadow: 0 0 20px #ff2bff55;
   overflow: hidden;
-  z-index: 1000;
 }
 
 .azTitleBar {
-  padding: 8px;
-  background: rgba(255,255,255,0.08);
-  border-bottom: 1px solid var(--border-soft);
-  cursor: grab;
+  height: 32px;
+  background: rgba(255,255,255,0.06);
+  border-bottom: 1px solid #ffffff22;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  cursor: grab;
 }
 
 .azTitle {
-  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  user-select: none;
 }
 
-.azClose {
-  width: 16px;
-  height: 16px;
-  background: #ff4b6b;
+.azControls {
+  display: flex;
+  gap: 6px;
+}
+
+.azClose,
+.azMax {
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   cursor: pointer;
 }
 
-.azContent {
-  padding: 12px;
-  height: calc(100% - 40px);
-  overflow-y: auto;
+.azClose {
+  background: #ff4b4b;
 }
+
+.azMax {
+  background: #4bb3ff;
+}
+
+.azClose:hover {
+  background: #ff7777;
+}
+
+.azMax:hover {
+  background: #77c9ff;
+}
+
+.azContent {
+  padding: 10px;
+  color: white;
+  height: calc(100% - 32px);
+  overflow: auto;
+}
+
 
 /* ------------------------------
    TOAST NOTIFICATIONS
