@@ -2,44 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Apex Zero OS</title>
+  <title>Apex Zero OS 2.0</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- Wallpaper + Background -->
+  <!-- DESKTOP -->
   <div id="desktop"></div>
 
-  <!-- Toast Notifications -->
-  <div id="toastContainer"></div>
+  <!-- DOCK -->
+  <div id="dock">
+    <div class="dockIcon" data-app="gamehub">🎮</div>
+    <div class="dockIcon" data-app="terminal">>_</div>
+    <div class="dockIcon" data-app="filemanager">📁</div>
+    <div class="dockIcon" data-app="musicplayer">🎵</div>
+    <div class="dockIcon" data-app="settings">⚙️</div>
+    <div class="dockIcon" data-app="assistant">🤖</div>
+  </div>
 
-  <!-- Dock -->
-  <div id="dock"></div>
+  <!-- NOTIFICATION CONTAINER -->
+  <div id="notifications"></div>
 
-  <!-- SYSTEM -->
-<script src="system/windowManager.js"></script>
-<script src="system/settingsEngine.js"></script>
+  <!-- LOCKSCREEN OVERLAY (hidden until used) -->
+  <div id="lockscreen" class="hidden"></div>
 
-<!-- APPS -->
-<script src="apps/gamehub.js"></script>
-<script src="apps/terminal.js"></script>
-<script src="apps/filemanager.js"></script>
-<script src="apps/musicplayer.js"></script>
-<script src="apps/settings.js"></script>
-<script src="apps/assistant.js"></script>
-<script src="apps/spotlight.js"></script>
-<script src="apps/widgets.js"></script>
-<script src="apps/desktops.js"></script>
-<script src="apps/lockscreen.js"></script>
-<script src="apps/notifications.js"></script>
-<script src="apps/appstore.js"></script>
-<script src="apps/wallpaper.js"></script>
-<script src="apps/systeminfo.js"></script>
+  <!-- SCRIPTS -->
+  <script src="system/settingsEngine.js"></script>
+  <script src="system/windowManager.js"></script>
+  <script src="main.js"></script>
 
-<!-- MAIN MUST BE LAST -->
-<script src="main.js"></script>
-
+  <!-- APPS -->
+  <script src="apps/wallpaper.js"></script>
+  <script src="apps/spotlight.js"></script>
+  <script src="apps/lockscreen.js"></script>
+  <script src="apps/gamehub.js"></script>
+  <script src="apps/notifications.js"></script>
+  <script src="apps/terminal.js"></script>
+  <script src="apps/filemanager.js"></script>
+  <script src="apps/musicplayer.js"></script>
+  <script src="apps/assistant.js"></script>
+  <script src="apps/settings.js"></script>
+  <script src="apps/widgets.js"></script>
+  <script src="apps/desktops.js"></script>
+  <script src="apps/appstore.js"></script>
+  <script src="apps/systeminfo.js"></script>
 
 </body>
 </html>
