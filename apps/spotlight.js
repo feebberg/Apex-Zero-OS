@@ -1,115 +1,51 @@
-let spotlightOpen = false;
+// --- SPOTLIGHT SEARCH ---
 
 function openSpotlight() {
-  if (spotlightOpen) return;
-  spotlightOpen = true;
+  if (document.getElementById("azSpotlight")) return;
 
   const box = document.createElement("div");
   box.id = "azSpotlight";
-  box.style = `
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 480px;
-    padding: 16px;
-    background: rgba(0,0,0,0.75);
-    border: 1px solid var(--border-soft);
-    border-radius: 12px;
-    box-shadow: 0 0 20px #ff2bff88;
-    backdrop-filter: blur(12px);
-    z-index: 999999;
-  `;
+  box.style.position = "fixed";
+  box.style.top = "20%";
+  box.style.left = "50%";
+  box.style.transform = "translateX(-50%)";
+  box.style.width = "420px";
+  box.style.padding = "20px";
+  box.style.background = "rgba(0,0,0,0.6)";
+  box.style.border = "1px solid var(--border-soft)";
+  box.style.borderRadius = "12px";
+  box.style.backdropFilter = "blur(12px)";
+  box.style.boxShadow = "0 0 20px #ff2bff55";
+  box.style.zIndex = 99999;
 
   box.innerHTML = `
-    <input id="azSpotInput" placeholder="Search apps..."
+    <input id="spotInput" placeholder="Search apps..."
       style="
         width:100%;
         padding:10px;
-        background:rgba(255,255,255,0.08);
-        border:1px solid var(--border-soft);
         border-radius:8px;
+        border:1px solid var(--border-soft);
+        background:rgba(255,255,255,0.1);
         color:white;
         outline:none;
-        font-size:16px;
       "
     >
-    <div id="azSpotResults" style="margin-top:12px; color:white;"></div>
   `;
 
   document.body.appendChild(box);
 
-  const input = document.getElementById("azSpotInput");
-  const results = document.getElementById("azSpotResults");
-
+  const input = document.getElementById("spotInput");
   input.focus();
 
-  input.oninput = () => {
-    const q = input.value.toLowerCase();
-    renderSpotlightResults(q, results);
-  };
-
-  input.onkeydown = e => {
-    if (e.key === "Escape") closeSpotlight();
-  };
-}
-
-function closeSpotlight() {
-  const box = document.getElementById("azSpotlight");
-  if (box) box.remove();
-  spotlightOpen = false;
-}
-
-function renderSpotlightResults(query, resultsBox) {
-  const apps = [
-    { id: "gamehub", name: "Game Hub" },
-    { id: "terminal", name: "Terminal" },
-    { id: "filemanager", name: "File Manager" },
-    { id: "musicplayer", name: "Music Player" },
-    { id: "settings", name: "Settings" },
-    { id: "assistant", name: "AI Assistant" }
-  ];
-
-  const matches = apps.filter(a => a.name.toLowerCase().includes(query));
-
-  if (matches.length === 0) {
-    resultsBox.innerHTML = `<div style="opacity:0.6;">No results</div>`;
-    return;
-  }
-
-  resultsBox.innerHTML = matches
-    .map(a => `
-      <div class="spotItem"
-        data-id="${a.id}"
-        style="
-          padding:8px;
-          border-radius:6px;
-          cursor:pointer;
-          background:rgba(255,255,255,0.05);
-          margin-bottom:6px;
-        "
-      >
-        🔍 ${a.name}
-      </div>
-    `)
-    .join("");
-
-  resultsBox.querySelectorAll(".spotItem").forEach(item => {
-    item.onclick = () => {
-      const id = item.dataset.id;
-      closeSpotlight();
-      openAppById(id);
-    };
+  input.addEventListener("keydown", e => {
+    if (e.key === "Escape") box.remove();
   });
 }
 
-// Keyboard shortcut: SPACEBAR opens Spotlight
+// FIXED HOTKEY — Ctrl + Space
 document.addEventListener("keydown", e => {
-  if (e.code === "Space" && !spotlightOpen) {
-    e.preventDefault();
+  if (e.ctrlKey && e.code === "Space") {
     openSpotlight();
-  } else if (e.code === "Escape" && spotlightOpen) {
-    closeSpotlight();
+    e.preventDefault();
   }
 });
-
