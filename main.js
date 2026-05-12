@@ -1,1 +1,26 @@
+window.onload = () => {
+  initDock();
+  pushNotification("Apex Zero OS Loaded");
+};
+
+function initDock() {
+  const dock = document.getElementById("dock");
+
+  const apps = [
+    { id: "gamehub", icon: "🎮", title: "Game Hub" }
+  ];
+
+  apps.forEach(app => {
+    const div = document.createElement("div");
+    div.className = "dockIcon";
+    div.title = app.title;
+    div.textContent = app.icon;
+    div.onclick = () => openAppById(app.id);
+    dock.appendChild(div);
+  });
+}
+
+function openAppById(id) {
+  if (id === "gamehub") return openGameHub();
+}
 
