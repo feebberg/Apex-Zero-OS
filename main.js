@@ -7,7 +7,8 @@ function initDock() {
   const dock = document.getElementById("dock");
 
   const apps = [
-    { id: "gamehub", icon: "🎮", title: "Game Hub" }
+    { id: "gamehub", icon: "🎮", title: "Game Hub" },
+    { id: "terminal", icon: "💻", title: "Terminal" }
   ];
 
   apps.forEach(app => {
@@ -22,5 +23,5 @@ function initDock() {
 
 function openAppById(id) {
   if (id === "gamehub") return openGameHub();
+  if (id === "terminal") return openTerminal();
 }
-
