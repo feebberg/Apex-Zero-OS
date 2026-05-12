@@ -2,46 +2,46 @@
 
 const azGames = [
   {
-    id: "game1",
-    name: "Game 1",
-    desc: "Recent game slot 1.",
-    icon: "🎮",
-    url: "https://example.com/game1" // <- put your real URL here
+    id: "eagler1122",
+    name: "Eaglercraft 1.12.2",
+    desc: "Your original offline WASM build.",
+    icon: "⛏️",
+    url: "https://github.com/feebberg/Apex-Zero/blob/main/Eaglercraft_1.12.2_WASM_Offline_Download%20(2).html"
   },
   {
     id: "game2",
-    name: "Game 2",
-    desc: "Recent game slot 2.",
-    icon: "🕹️",
-    url: "https://example.com/game2"
+    name: "Game Slot 2",
+    desc: "Add your next game here.",
+    icon: "🎮",
+    url: ""
   },
   {
     id: "game3",
-    name: "Game 3",
-    desc: "Recent game slot 3.",
-    icon: "⚡",
-    url: "https://example.com/game3"
+    name: "Game Slot 3",
+    desc: "Add your next game here.",
+    icon: "🕹️",
+    url: ""
   },
   {
     id: "game4",
-    name: "Game 4",
-    desc: "Recent game slot 4.",
-    icon: "🚀",
-    url: "https://example.com/game4"
+    name: "Game Slot 4",
+    desc: "Add your next game here.",
+    icon: "⚡",
+    url: ""
   },
   {
     id: "game5",
-    name: "Game 5",
-    desc: "Recent game slot 5.",
+    name: "Game Slot 5",
+    desc: "Add your next game here.",
     icon: "🔥",
-    url: "https://example.com/game5"
+    url: ""
   },
   {
     id: "game6",
-    name: "Game 6",
-    desc: "Recent game slot 6.",
-    icon: "💥",
-    url: "https://example.com/game6"
+    name: "Game Slot 6",
+    desc: "Add your next game here.",
+    icon: "🚀",
+    url: ""
   }
 ];
 
@@ -85,7 +85,7 @@ function openGameHub() {
     card.onclick = () => {
       const id = card.dataset.id;
       const game = azGames.find(g => g.id === id);
-      if (!game) return;
+      if (!game || !game.url) return;
 
       openGameWindow(game);
     };
