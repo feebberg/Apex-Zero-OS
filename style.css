@@ -1,194 +1,126 @@
-/* ------------------------------
-   ROOT VARIABLES
------------------------------- */
-:root {
-  --bg-main: radial-gradient(circle at top, #3b0b5f 0, #05010a 45%, #000000 100%);
-  --accent-neon: #ff2bff;
-  --border-soft: rgba(255,255,255,0.15);
-}
+/* ============================================================
+   APEX ZERO — COMPLETE WINDOW SYSTEM CSS (FULL REWRITE)
+   ============================================================ */
 
-/* ------------------------------
-   GLOBAL
------------------------------- */
-body {
-  margin: 0;
-  padding: 0;
-  background: var(--bg-main);
-  color: white;
-  font-family: system-ui, sans-serif;
-  overflow: hidden;
-  transition: 0.25s ease;
-}
-
-#desktop {
-  position: fixed;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  z-index: -1;
-}
-
-/* ------------------------------
-   DOCK
------------------------------- */
-#dock {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 14px;
-  padding: 12px 20px;
-  background: rgba(0,0,0,0.45);
-  border: 1px solid var(--border-soft);
-  border-radius: 20px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 20px #ff2bff55;
-  z-index: 9999;
-}
-
-.dockIcon {
-  font-size: 26px;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 12px;
-  transition: 0.2s;
-}
-
-.dockIcon:hover {
-  background: rgba(255,255,255,0.1);
-  transform: scale(1.15);
-}
-
-/* ------------------------------
-   WINDOWS
------------------------------- */
 .azWindow {
   position: absolute;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   border: 1px solid #ffffff22;
-  border-radius: 10px;
-  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  backdrop-filter: blur(14px);
   overflow: hidden;
+  box-shadow: 0 0 25px #00000088;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
 }
 
+.azWindow:active {
+  box-shadow: 0 0 35px #000000aa;
+  transform: scale(1.002);
+}
+
+/* -------------------------------
+   TITLE BAR
+   ------------------------------- */
+
 .azTitleBar {
-  height: 32px;
-  background: rgba(255,255,255,0.06);
+  height: 36px;
+  background: rgba(255, 255, 255, 0.07);
   border-bottom: 1px solid #ffffff22;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 8px;
+  padding: 0 12px;
   cursor: grab;
-}
-
-.azTitle {
-  font-size: 14px;
-  color: white;
   user-select: none;
 }
 
+.azTitleBar:active {
+  cursor: grabbing;
+}
+
+.azTitle {
+  font-size: 15px;
+  color: white;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+}
+
+/* -------------------------------
+   WINDOW CONTROL BUTTONS
+   ------------------------------- */
+
 .azControls {
   display: flex;
-  gap: 6px;
+  gap: 10px;
 }
 
-.azClose,
-.azMax {
-  width: 14px;
-  height: 14px;
+.azMin,
+.azMax,
+.azClose {
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   cursor: pointer;
+  transition: 0.15s ease;
+  border: 1px solid #ffffff33;
 }
 
-.azClose {
-  background: #ff4b4b;
-}
+/* Button colors */
+.azMin  { background: #ffd24b; }
+.azMax  { background: #4bb3ff; }
+.azClose { background: #ff4b4b; }
 
-.azMax {
-  background: #4bb3ff;
-}
+/* Hover effects */
+.azMin:hover  { background: #ffe07a; transform: scale(1.15); }
+.azMax:hover  { background: #77c9ff; transform: scale(1.15); }
+.azClose:hover { background: #ff7777; transform: scale(1.15); }
 
-.azClose:hover {
-  background: #ff7777;
-}
-
-.azMax:hover {
-  background: #77c9ff;
-}
+/* -------------------------------
+   CONTENT AREA
+   ------------------------------- */
 
 .azContent {
-  padding: 10px;
+  padding: 12px;
   color: white;
-  height: calc(100% - 32px);
+  height: calc(100% - 36px);
   overflow: auto;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
+/* Scrollbar styling */
+.azContent::-webkit-scrollbar {
+  width: 8px;
+}
 
-/* ------------------------------
-   TOAST NOTIFICATIONS
------------------------------- */
-#toastContainer {
+.azContent::-webkit-scrollbar-thumb {
+  background: #ffffff33;
+  border-radius: 10px;
+}
+
+.azContent::-webkit-scrollbar-thumb:hover {
+  background: #ffffff55;
+}
+
+/* -------------------------------
+   SNAP PREVIEW (OPTIONAL)
+   ------------------------------- */
+
+.azSnapPreview {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  top: 0;
+  width: 50vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px dashed #ffffff55;
+  pointer-events: none;
   z-index: 999999;
 }
 
-.toast {
-  padding: 10px 14px;
-  background: rgba(0,0,0,0.7);
-  border: 1px solid var(--border-soft);
-  border-radius: 8px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 12px #ff2bff55;
-  animation: fadeIn 0.3s ease;
+.azSnapPreview.left {
+  left: 0;
 }
 
-/* ------------------------------
-   SPOTLIGHT SEARCH
------------------------------- */
-#azSpotlight {
-  animation: fadeIn 0.25s ease;
-}
-
-.spotItem:hover {
-  background: rgba(255,255,255,0.15) !important;
-}
-
-/* ------------------------------
-   WIDGETS
------------------------------- */
-.azWidget {
-  animation: fadeIn 0.25s ease;
-}
-
-/* ------------------------------
-   LOCK SCREEN
------------------------------- */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes fadeOut {
-  from { opacity: 1; transform: scale(1); }
-  to { opacity: 0; transform: scale(0.96); }
-}
-
-/* ------------------------------
-   NOTIFICATION CENTER
------------------------------- */
-@keyframes slideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-
-@keyframes slideOut {
-  from { transform: translateX(0); }
-  to { transform: translateX(100%); }
+.azSnapPreview.right {
+  right: 0;
 }
