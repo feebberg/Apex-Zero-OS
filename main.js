@@ -10,7 +10,8 @@ function initDock() {
     { id: "gamehub", icon: "🎮", title: "Game Hub" },
     { id: "terminal", icon: "💻", title: "Terminal" },
     { id: "filemanager", icon: "📁", title: "File Manager" },
-    { id: "musicplayer", icon: "🎵", title: "Music Player" }
+    { id: "musicplayer", icon: "🎵", title: "Music Player" },
+    { id: "settings", icon: "⚙️", title: "Settings" }
   ];
 
   apps.forEach(app => {
@@ -28,4 +29,5 @@ function openAppById(id) {
   if (id === "terminal") return openTerminal();
   if (id === "filemanager") return openFileManager();
   if (id === "musicplayer") return openMusicPlayer();
+  if (id === "settings") return openSettings();
 }
