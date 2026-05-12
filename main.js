@@ -13,7 +13,10 @@ function initDock() {
     { id: "musicplayer", icon: "🎵", title: "Music Player" },
     { id: "settings", icon: "⚙️", title: "Settings" },
     { id: "assistant", icon: "🤖", title: "AI Assistant" },
-    { id: "spotlight", icon: "🔍", title: "Spotlight Search" }
+    { id: "spotlight", icon: "🔍", title: "Spotlight Search" },
+    { id: "widgets", icon: "🧩", title: "Widgets" },
+    { id: "desktops", icon: "🖥️", title: "Virtual Desktops" },
+    { id: "lock", icon: "🔒", title: "Lock Screen" }
   ];
 
   apps.forEach(app => {
@@ -21,10 +24,15 @@ function initDock() {
     div.className = "dockIcon";
     div.title = app.title;
     div.textContent = app.icon;
+
     div.onclick = () => {
       if (app.id === "spotlight") return openSpotlight();
+      if (app.id === "widgets") return openWidgets();
+      if (app.id === "desktops") return openDesktopManager();
+      if (app.id === "lock") return showLockScreen();
       openAppById(app.id);
     };
+
     dock.appendChild(div);
   });
 }
