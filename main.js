@@ -12,7 +12,8 @@ function initDock() {
     { id: "filemanager", icon: "📁", title: "File Manager" },
     { id: "musicplayer", icon: "🎵", title: "Music Player" },
     { id: "settings", icon: "⚙️", title: "Settings" },
-    { id: "assistant", icon: "🤖", title: "AI Assistant" }
+    { id: "assistant", icon: "🤖", title: "AI Assistant" },
+    { id: "spotlight", icon: "🔍", title: "Spotlight Search" }
   ];
 
   apps.forEach(app => {
@@ -20,7 +21,10 @@ function initDock() {
     div.className = "dockIcon";
     div.title = app.title;
     div.textContent = app.icon;
-    div.onclick = () => openAppById(app.id);
+    div.onclick = () => {
+      if (app.id === "spotlight") return openSpotlight();
+      openAppById(app.id);
+    };
     dock.appendChild(div);
   });
 }
