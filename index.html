@@ -3,22 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <title>Apex Zero OS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+  <!-- Wallpaper + Background -->
   <div id="desktop"></div>
-  <div id="dock"></div>
+
+  <!-- Toast Notifications -->
   <div id="toastContainer"></div>
+
+  <!-- Dock -->
+  <div id="dock"></div>
 
   <!-- SYSTEM -->
   <script src="system/windowManager.js"></script>
 
   <!-- APPS -->
   <script src="apps/gamehub.js"></script>
+  <script src="apps/terminal.js"></script>
+  <script src="apps/filemanager.js"></script>
+  <script src="apps/musicplayer.js"></script>
+  <script src="apps/settings.js"></script>
+  <script src="apps/assistant.js"></script>
+  <script src="apps/spotlight.js"></script>
+  <script src="apps/widgets.js"></script>
+  <script src="apps/desktops.js"></script>
+  <script src="apps/lockscreen.js"></script>
+  <script src="apps/notifications.js"></script>
+  <script src="apps/appstore.js"></script>
+  <script src="apps/wallpaper.js"></script>
+  <script src="apps/systeminfo.js"></script>
 
-  <!-- BOOT -->
+  <!-- MAIN MUST BE LAST -->
   <script src="main.js"></script>
+
 </body>
 </html>
-
