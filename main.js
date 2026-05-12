@@ -16,7 +16,11 @@ function initDock() {
     { id: "spotlight", icon: "🔍", title: "Spotlight Search" },
     { id: "widgets", icon: "🧩", title: "Widgets" },
     { id: "desktops", icon: "🖥️", title: "Virtual Desktops" },
-    { id: "lock", icon: "🔒", title: "Lock Screen" }
+    { id: "lock", icon: "🔒", title: "Lock Screen" },
+    { id: "notifications", icon: "🔔", title: "Notification Center" },
+    { id: "appstore", icon: "🛒", title: "App Store" },
+    { id: "wallpaper", icon: "🖼️", title: "Wallpaper Picker" },
+    { id: "systeminfo", icon: "💠", title: "System Info" }
   ];
 
   apps.forEach(app => {
@@ -30,6 +34,10 @@ function initDock() {
       if (app.id === "widgets") return openWidgets();
       if (app.id === "desktops") return openDesktopManager();
       if (app.id === "lock") return showLockScreen();
+      if (app.id === "notifications") return toggleNotificationCenter();
+      if (app.id === "appstore") return openAppStore();
+      if (app.id === "wallpaper") return openWallpaperPicker();
+      if (app.id === "systeminfo") return openSystemInfo();
       openAppById(app.id);
     };
 
