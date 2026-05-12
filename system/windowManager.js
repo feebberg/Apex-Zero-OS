@@ -36,10 +36,15 @@ function createWindow(id, title, content, opts = {}) {
   win.appendChild(contentDiv);
   document.body.appendChild(win);
 
-  // CLOSE BUTTON FIXED
+  // CLOSE BUTTON
   closeBtn.onclick = () => {
     win.remove();
   };
+
+  // FOCUS ON CLICK
+  win.addEventListener("mousedown", () => {
+    win.style.zIndex = zIndexCounter++;
+  });
 
   // DRAGGING
   let offsetX = 0;
