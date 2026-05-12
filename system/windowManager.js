@@ -1,49 +1,56 @@
+// --- WINDOW MANAGER ---
 
-let azZ = 10;
+let zIndexCounter = 1000;
 
-// Create a draggable window
 function createWindow(id, title, content, opts = {}) {
-  const desktop = document.getElementById("desktop");
-
   const win = document.createElement("div");
   win.className = "azWindow";
-  win.dataset.app = id;
+  win.dataset.id = id;
 
-  win.style.width = opts.width || "720px";
-  win.style.height = opts.height || "480px";
-  win.style.left = opts.left || "80px";
-  win.style.top = opts.top || "60px";
-  win.style.zIndex = ++azZ;
+  win.style.width = opts.width || "400px";
+  win.style.height = opts.height || "300px";
+  win.style.left = opts.left || "200px";
+  win.style.top = opts.top || "120px";
+  win.style.zIndex = zIndexCounter++;
 
-  win.innerHTML = `
-    <div class="azTitleBar">
-      <div class="azTitle">${title}</div>
-      <div class="azCloseBtn"></div>
-    </div>
-    <div class="azContent">${content}</div>
-  `;
+  // TITLE BAR
+  const titlebar = document.createElement("div");
+  titlebar.className = "azTitleBar";
 
-  desktop.appendChild(win);
+  const titleText = document.createElement("div");
+  titleText.className = "azTitle";
+  titleText.textContent = title;
 
-  win.querySelector(".azCloseBtn").onclick = () => win.remove();
-  makeDraggable(win);
+  const closeBtn = document.createElement("div");
+  closeBtn.className = "azClose";
 
-  return win;
-}
+  titlebar.appendChild(titleText);
+  titlebar.appendChild(closeBtn);
 
-// Dragging logic
-function makeDraggable(win) {
-  const bar = win.querySelector(".azTitleBar");
-  let dragging = false;
+  // CONTENT
+  const contentDiv = document.createElement("div");
+  contentDiv.className = "azContent";
+  contentDiv.innerHTML = content;
+
+  win.appendChild(titlebar);
+  win.appendChild(contentDiv);
+  document.body.appendChild(win);
+
+  // CLOSE BUTTON FIXED
+  closeBtn.onclick = () => {
+    win.remove();
+  };
+
+  // DRAGGING
   let offsetX = 0;
   let offsetY = 0;
+  let dragging = false;
 
-  bar.addEventListener("mousedown", e => {
+  titlebar.addEventListener("mousedown", e => {
     dragging = true;
-    azZ++;
-    win.style.zIndex = azZ;
     offsetX = e.clientX - win.offsetLeft;
     offsetY = e.clientY - win.offsetTop;
+    win.style.zIndex = zIndexCounter++;
   });
 
   document.addEventListener("mousemove", e => {
@@ -52,15 +59,9 @@ function makeDraggable(win) {
     win.style.top = e.clientY - offsetY + "px";
   });
 
-  document.addEventListener("mouseup", () => dragging = false);
-}
+  document.addEventListener("mouseup", () => {
+    dragging = false;
+  });
 
-// Notifications
-function pushNotification(text) {
-  const box = document.getElementById("toastContainer");
-  const toast = document.createElement("div");
-  toast.className = "toast";
-  toast.textContent = text;
-  box.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
+  return win;
 }
